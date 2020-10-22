@@ -1,0 +1,88 @@
+#include <CL/opencl.h>
+#include <gputk.h>
+
+
+const char *kernelSource = "";
+
+int main(int argc, char *argv[]) {
+  gpuTKArg_t args;
+  int inputLength;
+  int filterLength;
+  int inputLengthBytes;
+  float *hostInput1;
+  float *hostInput2;
+  float *hostOutput;
+  cl_mem deviceInput1;
+  cl_mem deviceInput2;
+  cl_mem deviceOutput;
+
+  cl_platform_id cpPlatform; // OpenCL platform
+  cl_device_id device_id;    // device ID
+  cl_context context;        // context
+  cl_command_queue queue;    // command queue
+  cl_program program;        // program
+  cl_kernel kernel;          // kernel
+
+  args = gpuTKArg_read(argc, argv);
+
+  gpuTKTime_start(Generic, "Importing data and creating memory on host");
+  hostInput1 =
+      (float *)gpuTKImport(gpuTKArg_getInputFile(args, 0), &inputLength);
+  hostInput2 =
+      (float *)gpuTKImport(gpuTKArg_getInputFile(args, 1), &filterLength);
+  inputLengthBytes = inputLength * sizeof(float);
+  hostOutput       = (float *)malloc(inputLengthBytes);
+  gpuTKTime_stop(Generic, "Importing data and creating memory on host");
+
+  gpuTKLog(TRACE, "The input length is ", inputLength);
+  gpuTKLog(TRACE, "The filter length is ", filterLength);
+  gpuTKLog(TRACE, "The input size is ", inputLengthBytes, " bytes");
+
+  //@@ Insert code here
+  //@@ Initialize the workgroup dimensions
+
+  //@@ Bind to platform
+
+  //@@ Get ID for the device
+
+  //@@ Create a context
+
+  //@@ Create a command queue
+
+  //@@ Create the compute program from the source buffer
+
+  //@@ Build the program executable
+
+  //@@ Create the compute kernel in the program we wish to run
+
+  //@@ Create the input and output arrays in device memory for our
+  //@@ calculation
+
+  //@@ Write our data set into the input array in device memory
+
+  //@@ Set the arguments to our compute kernel
+
+  //@@ Execute the kernel over the entire range of the data set
+
+  //@@ Wait for the command queue to get serviced before reading back results
+
+  //@@ Read the results from the device
+
+  gpuTKSolution(args, hostOutput, inputLength);
+
+  // release OpenCL resources
+  clReleaseMemObject(deviceInput1);
+  clReleaseMemObject(deviceInput2);
+  clReleaseMemObject(deviceOutput);
+  clReleaseProgram(program);
+  clReleaseKernel(kernel);
+  clReleaseCommandQueue(queue);
+  clReleaseContext(context);
+
+  // release host memory
+  free(hostInput1);
+  free(hostInput2);
+  free(hostOutput);
+
+  return 0;
+}
