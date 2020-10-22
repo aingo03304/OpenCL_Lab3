@@ -1,0 +1,5 @@
+.DS_Store
+build
+sources/Tiled1DConvolution_Template
+sources/dataset_generator
+sources/1DConvolution/
