@@ -1,4 +1,5 @@
 .DS_Store
+.vscode
 build
 sources/Tiled1DConvolution_Template
 sources/dataset_generator
